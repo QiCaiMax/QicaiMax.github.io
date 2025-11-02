@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>随机特效照片墙</title>
+    <title>快速加载照片墙</title>
     <style>
         * {
             margin: 0;
@@ -55,7 +55,7 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            transition: all 0.5s ease;
+            transition: all 0.3s ease;
             cursor: pointer;
             background-color: #333;
         }
@@ -64,22 +64,20 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: all 0.5s ease;
+            transition: all 0.3s ease;
         }
 
-        /* 随机位置效果 */
-        .random-1 { transform: rotate(3deg); }
-        .random-2 { transform: rotate(-2deg); }
-        .random-3 { transform: rotate(5deg); }
-        .random-4 { transform: rotate(-4deg); }
-        .random-5 { transform: rotate(2deg); }
-        .random-6 { transform: rotate(-5deg); }
-        .random-7 { transform: rotate(4deg); }
-        .random-8 { transform: rotate(-3deg); }
+        /* 随机位置效果 - 减少旋转角度以提升性能 */
+        .random-1 { transform: rotate(1deg); }
+        .random-2 { transform: rotate(-1deg); }
+        .random-3 { transform: rotate(2deg); }
+        .random-4 { transform: rotate(-2deg); }
+        .random-5 { transform: rotate(1.5deg); }
+        .random-6 { transform: rotate(-1.5deg); }
 
-        /* 悬停特效 */
+        /* 悬停特效 - 简化效果 */
         .photo-item:hover {
-            transform: scale(1.05) rotate(0deg);
+            transform: scale(1.05);
             z-index: 10;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
         }
@@ -88,29 +86,17 @@
             filter: brightness(1.1);
         }
 
-        /* 不同类型的特效 */
+        /* 不同类型的特效 - 减少复杂滤镜 */
         .effect-1:hover {
-            transform: scale(1.08) rotate(1deg);
+            transform: scale(1.08);
         }
 
         .effect-2:hover {
-            transform: scale(1.1) rotate(-2deg);
-            filter: hue-rotate(90deg);
+            transform: scale(1.1);
         }
 
         .effect-3:hover {
-            transform: scale(1.06) rotate(3deg);
-            filter: saturate(2);
-        }
-
-        .effect-4:hover {
-            transform: scale(1.12) rotate(-1deg);
-            filter: contrast(1.5);
-        }
-
-        .effect-5:hover {
-            transform: scale(1.07) rotate(2deg);
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+            transform: scale(1.06);
         }
 
         /* 图片标题效果 */
@@ -131,23 +117,29 @@
             transform: translateY(0);
         }
 
-        /* 动画效果 */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        /* 加载指示器 */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            font-size: 1.2rem;
         }
 
-        .float-animation {
-            animation: float 6s ease-in-out infinite;
+        .loading::after {
+            content: "";
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
         }
 
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
-            50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
-        }
-
-        .glow-animation {
-            animation: glow 3s ease-in-out infinite;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* 响应式设计 */
@@ -177,12 +169,13 @@
 <body>
     <div class="container">
         <header>
-            <h1>记忆时光墙</h1>
-            <p class="subtitle">每一张照片都是时光的标本</p>
+            <h1>快速照片墙</h1>
+            <p class="subtitle">优化加载速度，保留精彩特效</p>
         </header>
         
         <div class="photo-wall" id="photoWall">
             <!-- 照片将通过JavaScript动态添加 -->
+            <div class="loading">正在加载图片...</div>
         </div>
     </div>
 
@@ -190,25 +183,17 @@
         document.addEventListener('DOMContentLoaded', function() {
             const photoWall = document.getElementById('photoWall');
             
-            // 模拟从src文件夹加载的图片
+            // 模拟从src文件夹加载的图片 - 使用更小的图片URL
             // 在实际使用中，您需要将这些路径替换为实际的图片路径
             const imagePaths = [
                 { src: 'mmexport1760979928472.jpg', title: '山间日出' },
-                { src: 'mmexport1760979913240.jpg', title: '海边日落' },
+                { src: 'mmexport1760979925139.jpg', title: '海边日落' },
                 { src: 'mmexport1760979921855.jpg', title: '城市夜景' },
-                { src: 'mmexport1760979925139.jpg', title: '森林漫步' },
-                { src: 'src/image5.jpg', title: '雪中足迹' },
-                { src: 'src/image6.jpg', title: '湖光山色' },
-                { src: 'src/image7.jpg', title: '田园风光' },
-                { src: 'src/image8.jpg', title: '古镇风情' },
-                { src: 'src/image9.jpg', title: '花海漫步' },
-                { src: 'src/image10.jpg', title: '星空璀璨' },
-                { src: 'src/image11.jpg', title: '秋日落叶' },
-                { src: 'src/image12.jpg', title: '冬日暖阳' },
-                { src: 'src/image13.jpg', title: '春日花开' },
-                { src: 'src/image14.jpg', title: '夏日海滩' },
-                { src: 'src/image15.jpg', title: '高山云海' }
+                { src: 'mmexport1760979913240.jpg', title: '森林漫步' },
             ];
+            
+            // 移除加载指示器
+            photoWall.innerHTML = '';
             
             // 随机排序图片
             shuffleArray(imagePaths);
@@ -216,19 +201,12 @@
             // 添加图片到照片墙
             imagePaths.forEach((image, index) => {
                 const photoItem = document.createElement('div');
-                photoItem.className = `photo-item random-${(index % 8) + 1} effect-${(index % 5) + 1}`;
-                
-                // 随机添加动画效果
-                if (Math.random() > 0.7) {
-                    photoItem.classList.add('float-animation');
-                }
-                if (Math.random() > 0.8) {
-                    photoItem.classList.add('glow-animation');
-                }
+                photoItem.className = `photo-item random-${(index % 6) + 1} effect-${(index % 3) + 1}`;
                 
                 const img = document.createElement('img');
                 img.src = image.src;
                 img.alt = image.title;
+                img.loading = "lazy"; // 使用懒加载
                 
                 const title = document.createElement('div');
                 title.className = 'photo-title';
