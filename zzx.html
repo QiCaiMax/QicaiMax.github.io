@@ -3,228 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>快速加载照片墙</title>
+    <title>简洁照片墙</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            color: white;
-            min-height: 100vh;
-            overflow-x: hidden;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
         }
-
-        .container {
+        
+        .photo-wall {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
-        }
-
-        header {
-            text-align: center;
-            padding: 30px 0;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        .photo-wall {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            grid-auto-rows: 200px;
-            grid-gap: 15px;
-            padding: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-auto-rows: 280px;
+            grid-gap: 20px;
         }
-
+        
         .photo-item {
             position: relative;
-            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            background-color: #333;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: #fff;
         }
-
+        
+        .photo-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
         .photo-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: all 0.3s ease;
+            transition: transform 0.5s ease;
         }
-
-        /* 随机位置效果 - 减少旋转角度以提升性能 */
-        .random-1 { transform: rotate(1deg); }
-        .random-2 { transform: rotate(-1deg); }
-        .random-3 { transform: rotate(2deg); }
-        .random-4 { transform: rotate(-2deg); }
-        .random-5 { transform: rotate(1.5deg); }
-        .random-6 { transform: rotate(-1.5deg); }
-
-        /* 悬停特效 - 简化效果 */
-        .photo-item:hover {
-            transform: scale(1.05);
-            z-index: 10;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-        }
-
+        
         .photo-item:hover img {
-            filter: brightness(1.1);
+            transform: scale(1.05);
         }
-
-        /* 不同类型的特效 - 减少复杂滤镜 */
-        .effect-1:hover {
-            transform: scale(1.08);
-        }
-
-        .effect-2:hover {
-            transform: scale(1.1);
-        }
-
-        .effect-3:hover {
-            transform: scale(1.06);
-        }
-
-        /* 图片标题效果 */
-        .photo-title {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-            color: white;
-            padding: 15px 10px 10px;
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .photo-item:hover .photo-title {
-            transform: translateY(0);
-        }
-
-        /* 加载指示器 */
+        
         .loading {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 200px;
-            font-size: 1.2rem;
+            font-size: 18px;
+            color: #888;
         }
-
-        .loading::after {
-            content: "";
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-left: 10px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* 响应式设计 */
+        
+        /* 响应式调整 */
         @media (max-width: 768px) {
             .photo-wall {
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-                grid-auto-rows: 150px;
-            }
-            
-            h1 {
-                font-size: 2.2rem;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                grid-auto-rows: 200px;
+                grid-gap: 15px;
             }
         }
-
+        
         @media (max-width: 480px) {
             .photo-wall {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-                grid-auto-rows: 120px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                grid-auto-rows: 150px;
+                grid-gap: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>快速照片墙</h1>
-            <p class="subtitle">优化加载速度，保留精彩特效</p>
-        </header>
-        
-        <div class="photo-wall" id="photoWall">
-            <!-- 照片将通过JavaScript动态添加 -->
-            <div class="loading">正在加载图片...</div>
-        </div>
+    <div class="photo-wall" id="photoWall">
+        <!-- 图片将通过JavaScript动态加载 -->
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const photoWall = document.getElementById('photoWall');
+        // 图片路径数组 - 请将这里替换为您自己的图片路径
+        const imagePaths = [
+            'mmexport1760979913240.jpg',
+            'mmexport1760979921855.jpg',
+            'mmexport1760979925139.jpg',
+            'mmexport1760979928472.jpg',
+        ];
+        
+        // 获取照片墙容器
+        const photoWall = document.getElementById('photoWall');
+        
+        // 创建图片元素并添加到照片墙
+        imagePaths.forEach(path => {
+            const photoItem = document.createElement('div');
+            photoItem.className = 'photo-item';
             
-            // 模拟从src文件夹加载的图片 - 使用更小的图片URL
-            // 在实际使用中，您需要将这些路径替换为实际的图片路径
-            const imagePaths = [
-                { src: 'mmexport1760979928472.jpg', title: '山间日出' },
-                { src: 'mmexport1760979925139.jpg', title: '海边日落' },
-                { src: 'mmexport1760979921855.jpg', title: '城市夜景' },
-                { src: 'mmexport1760979913240.jpg', title: '森林漫步' },
-            ];
+            const img = document.createElement('img');
+            img.src = path;
+            img.alt = '照片墙图片';
+            img.loading = 'lazy'; // 使用懒加载提高性能
             
-            // 移除加载指示器
-            photoWall.innerHTML = '';
-            
-            // 随机排序图片
-            shuffleArray(imagePaths);
-            
-            // 添加图片到照片墙
-            imagePaths.forEach((image, index) => {
-                const photoItem = document.createElement('div');
-                photoItem.className = `photo-item random-${(index % 6) + 1} effect-${(index % 3) + 1}`;
+            photoItem.appendChild(img);
+            photoWall.appendChild(photoItem);
+        });
+        
+        // 添加加载状态处理
+        window.addEventListener('load', function() {
+            document.querySelectorAll('.photo-item img').forEach(img => {
+                img.addEventListener('load', function() {
+                    this.parentElement.classList.remove('loading');
+                });
                 
-                const img = document.createElement('img');
-                img.src = image.src;
-                img.alt = image.title;
-                img.loading = "lazy"; // 使用懒加载
-                
-                const title = document.createElement('div');
-                title.className = 'photo-title';
-                title.textContent = image.title;
-                
-                photoItem.appendChild(img);
-                photoItem.appendChild(title);
-                photoWall.appendChild(photoItem);
+                img.addEventListener('error', function() {
+                    console.error('图片加载失败:', this.src);
+                    this.parentElement.innerHTML = '<div class="loading">图片加载失败</div>';
+                });
             });
-            
-            // 随机打乱数组函数
-            function shuffleArray(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
-                }
-                return array;
-            }
         });
     </script>
 </body>
