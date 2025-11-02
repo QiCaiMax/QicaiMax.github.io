@@ -9,192 +9,59 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
             padding: 20px;
-            color: white;
         }
         
         .container {
             text-align: center;
-            max-width: 600px;
+            max-width: 400px;
             width: 100%;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
         
         h1 {
-            font-size: 2.8rem;
-            margin-bottom: 15px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        p {
-            font-size: 1.2rem;
+            color: #333;
             margin-bottom: 40px;
-            opacity: 0.9;
-            line-height: 1.6;
-        }
-        
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
+            font-weight: 400;
+            font-size: 24px;
         }
         
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px 40px;
-            font-size: 1.3rem;
-            font-weight: 600;
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #4a6cf7;
             color: white;
-            background: linear-gradient(45deg, #FF8A00, #FF2070);
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 138, 0, 0.4);
             text-decoration: none;
-            position: relative;
-            overflow: hidden;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(74, 108, 247, 0.2);
         }
         
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 138, 0, 0.6);
+            background-color: #3a5ce5;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(74, 108, 247, 0.3);
         }
         
         .btn:active {
-            transform: translateY(1px);
-        }
-        
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 5px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.5);
-            opacity: 0;
-            border-radius: 100%;
-            transform: scale(1, 1) translate(-50%);
-            transform-origin: 50% 50%;
-        }
-        
-        .btn:focus:not(:active)::after {
-            animation: ripple 1s ease-out;
-        }
-        
-        @keyframes ripple {
-            0% {
-                transform: scale(0, 0);
-                opacity: 0.5;
-            }
-            100% {
-                transform: scale(20, 20);
-                opacity: 0;
-            }
-        }
-        
-        .baidu-icon {
-            width: 30px;
-            height: 30px;
-            margin-right: 12px;
-            filter: invert(1);
-        }
-        
-        .features {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 50px;
-            flex-wrap: wrap;
-        }
-        
-        .feature {
-            flex: 1;
-            min-width: 150px;
-            margin: 10px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-        }
-        
-        .feature h3 {
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-        
-        .feature p {
-            font-size: 0.9rem;
-            margin-bottom: 0;
-            opacity: 0.8;
-        }
-        
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            p {
-                font-size: 1rem;
-            }
-            
-            .container {
-                padding: 30px 20px;
-            }
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>前往百度搜索</h1>
-        <p>点击下方按钮，即可跳转至百度首页。百度是中国最大的搜索引擎，为您提供海量信息搜索服务。</p>
-        
-        <div class="btn-container">
-            <a href="https://www.baidu.com" class="btn" target="_blank">
-                <svg class="baidu-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M682 432c-40 0-76 16-102 42-26 26-42 62-42 102s16 76 42 102c26 26 62 42 102 42s76-16 102-42c26-26 42-62 42-102s-16-76-42-102c-26-26-62-42-102-42z m-340 0c-40 0-76 16-102 42-26 26-42 62-42 102s16 76 42 102c26 26 62 42 102 42s76-16 102-42c26-26 42-62 42-102s-16-76-42-102c-26-26-62-42-102-42z m170-300c-166 0-300 134-300 300s134 300 300 300 300-134 300-300-134-300-300-300z"/>
-                </svg>
-                前往百度
-            </a>
-        </div>
-        
-        <div class="features">
-            <div class="feature">
-                <h3>信息搜索</h3>
-                <p>快速找到您需要的信息和答案</p>
-            </div>
-            <div class="feature">
-                <h3>知识百科</h3>
-                <p>获取权威可靠的知识与百科内容</p>
-            </div>
-            <div class="feature">
-                <h3>便捷服务</h3>
-                <p>享受百度提供的多样化在线服务</p>
-            </div>
-        </div>
+        <a href="https://www.baidu.com" class="btn">跳转到百度</a>
     </div>
-    
-    <script>
-        // 添加点击效果
-        document.querySelector('.btn').addEventListener('click', function(e) {
-            // 可以在这里添加统计代码或其他功能
-            console.log('用户点击了跳转按钮，即将前往百度');
-        });
-    </script>
 </body>
-                      </html>
+</html>
