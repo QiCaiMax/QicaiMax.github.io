@@ -3,333 +3,459 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>光影瞬间 | 精美图片展示</title>
+    <title>时光回忆 - 照片走马灯</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background-color: #f8f9fa;
-            color: #333;
-            line-height: 1.6;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
         
         .container {
+            width: 90%;
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* 头部样式 */
-        header {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            padding: 60px 0;
             text-align: center;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
         }
         
-        header h1 {
-            font-size: 3rem;
-            margin-bottom: 15px;
+        header {
+            margin-bottom: 40px;
+            padding: 20px;
+            animation: fadeIn 2s ease;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
             font-weight: 300;
             letter-spacing: 2px;
         }
         
-        header p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto;
-            opacity: 0.9;
-        }
-        
-        /* 导航样式 */
-        nav {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-        }
-        
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #2575fc;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: #555;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: #2575fc;
-        }
-        
-        /* 图片网格样式 */
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            padding: 40px 0;
-        }
-        
-        .photo-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .photo-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        }
-        
-        .photo-img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-        
-        .photo-card:hover .photo-img {
-            transform: scale(1.05);
-        }
-        
-        .photo-info {
-            padding: 20px;
-        }
-        
-        .photo-title {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: #333;
-        }
-        
-        .photo-desc {
-            color: #666;
-            font-size: 0.95rem;
-        }
-        
-        /* 页脚样式 */
-        footer {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 50px 0 20px;
-            margin-top: 60px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        .footer-section h3 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
+        .carousel-container {
             position: relative;
-            padding-bottom: 10px;
+            width: 100%;
+            height: 500px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
         
-        .footer-section h3::after {
-            content: '';
+        .carousel {
+            display: flex;
+            transition: transform 0.8s ease;
+            height: 100%;
+        }
+        
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .slide-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+        
+        .slide-content {
             position: absolute;
-            left: 0;
             bottom: 0;
-            width: 50px;
-            height: 2px;
-            background-color: #3498db;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 30px;
+            text-align: left;
+            border-radius: 0 0 15px 15px;
         }
         
-        .footer-section p {
+        .slide-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .slide-date {
+            font-size: 1rem;
+            opacity: 0.8;
             margin-bottom: 15px;
-            line-height: 1.8;
         }
         
-        .footer-bottom {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        .slide-description {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            max-width: 80%;
+        }
+        
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 0 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            margin: 0 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .indicator.active {
+            background: white;
+            transform: scale(1.2);
+        }
+        
+        .play-pause {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .play-pause:hover {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+        
+        footer {
+            margin-top: 40px;
+            padding: 20px;
             font-size: 0.9rem;
-            color: #bdc3c7;
+            opacity: 0.7;
         }
         
-        /* 响应式设计 */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
         @media (max-width: 768px) {
-            header h1 {
-                font-size: 2.2rem;
+            h1 {
+                font-size: 2.5rem;
             }
             
-            .nav-container {
-                flex-direction: column;
+            .carousel-container {
+                height: 400px;
             }
             
-            .nav-links {
-                margin-top: 15px;
+            .slide-title {
+                font-size: 1.5rem;
             }
             
-            .nav-links li {
-                margin: 0 15px;
-            }
-            
-            .gallery {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            .slide-description {
+                font-size: 1rem;
+                max-width: 100%;
             }
         }
         
         @media (max-width: 480px) {
-            header {
-                padding: 40px 0;
+            h1 {
+                font-size: 2rem;
             }
             
-            header h1 {
-                font-size: 1.8rem;
+            .carousel-container {
+                height: 300px;
             }
             
-            .gallery {
-                grid-template-columns: 1fr;
+            .slide-content {
+                padding: 15px;
+            }
+            
+            .slide-title {
+                font-size: 1.2rem;
+            }
+            
+            .slide-description {
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 头部 -->
-    <header>
-        <div class="container">
-            <h1>光影瞬间</h1>
-            <p>捕捉生活中的美好，记录每一个值得珍藏的瞬间</p>
-        </div>
-    </header>
+    <div class="floating-elements" id="floatingElements"></div>
     
-    <!-- 导航 -->
-    <nav>
-        <div class="container nav-container">
-            <div class="logo">光影画廊</div>
-            <ul class="nav-links">
-                <li><a href="#">首页</a></li>
-                <li><a href="#">自然风光</a></li>
-                <li><a href="#">城市建筑</a></li>
-                <li><a href="#">人文纪实</a></li>
-                <li><a href="#">关于我们</a></li>
-            </ul>
-        </div>
-    </nav>
-    
-    <!-- 主要内容 -->
-    <main class="container">
-        <div class="gallery">
-            <!-- 图片1 -->
-            <div class="photo-card">
-                <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="山间晨雾" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">山间晨雾</h3>
-                    <p class="photo-desc">清晨的山谷被薄雾笼罩，如梦似幻，宛如仙境。</p>
-                </div>
-            </div>
-            
-            <!-- 图片2 -->
-            <div class="photo-card">
-                <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="城市夜景" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">城市夜景</h3>
-                    <p class="photo-desc">夜幕降临，城市灯火璀璨，展现出与白天截然不同的魅力。</p>
-                </div>
-            </div>
-            
-            <!-- 图片3 -->
-            <div class="photo-card">
-                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="雪山之巅" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">雪山之巅</h3>
-                    <p class="photo-desc">雄伟的雪山在蓝天映衬下更显壮丽，令人心生敬畏。</p>
-                </div>
-            </div>
-            
-            <!-- 图片4 -->
-            <div class="photo-card">
-                <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="林间光影" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">林间光影</h3>
-                    <p class="photo-desc">阳光透过树叶洒下斑驳光影，营造出宁静而神秘的氛围。</p>
-                </div>
-            </div>
-            
-            <!-- 图片5 -->
-            <div class="photo-card">
-                <img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="海岸日落" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">海岸日落</h3>
-                    <p class="photo-desc">夕阳西下，海天一色，金色的光芒洒满海面，美不胜收。</p>
-                </div>
-            </div>
-            
-            <!-- 图片6 -->
-            <div class="photo-card">
-                <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="云雾山脉" class="photo-img">
-                <div class="photo-info">
-                    <h3 class="photo-title">云雾山脉</h3>
-                    <p class="photo-desc">云雾缭绕的山脉，宛如一幅水墨画，意境悠远。</p>
-                </div>
+    <div class="container">
+        <header>
+            <h1>时光回忆</h1>
+            <p class="subtitle">珍藏每一刻美好瞬间</p>
+        </header>
+        
+        <div class="carousel-container">
+            <div class="carousel" id="carousel">
+                <!-- 幻灯片将通过JavaScript动态生成 -->
             </div>
         </div>
-    </main>
-    
-    <!-- 页脚 -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>关于我们</h3>
-                    <p>光影瞬间是一个致力于分享高质量摄影作品的平台，我们希望通过镜头记录世界的美好，让更多人感受到摄影的魅力。</p>
-                </div>
+        
+        <div class="carousel-controls">
+            <button class="btn" id="prevBtn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="btn" id="nextBtn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        
+        <div class="indicators" id="indicators">
+            <!-- 指示器将通过JavaScript动态生成 -->
+        </div>
+        
+        <div class="play-pause" id="playPause">
+            <i class="fas fa-pause"></i>
+        </div>
+        
+        <footer>
+            <p>© 2023 时光回忆 - 让美好永存心间</p>
+        </footer>
+    </div>
+
+    <script>
+        // 照片数据
+        const photos = [
+            {
+                image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+                title: "山间日出",
+                date: "2023年5月15日",
+                description: "清晨的第一缕阳光洒在山巅，万物苏醒的时刻。"
+            },
+            {
+                image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05",
+                title: "森林迷雾",
+                date: "2023年6月22日",
+                description: "晨雾中的森林，如同仙境般神秘而美丽。"
+            },
+            {
+                image: "https://images.unsplash.com/photo-1439066615861-d1af74d74000",
+                title: "湖畔日落",
+                date: "2023年7月10日",
+                description: "夕阳西下，湖面泛起金色的涟漪，宁静而美好。"
+            },
+            {
+                image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+                title: "海边黄昏",
+                date: "2023年8月5日",
+                description: "海浪轻拍沙滩，夕阳将天空染成橙红色。"
+            },
+            {
+                image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e",
+                title: "山野秋色",
+                date: "2023年9月18日",
+                description: "秋天的山野，层林尽染，如诗如画。"
+            }
+        ];
+        
+        // DOM元素
+        const carousel = document.getElementById('carousel');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const indicatorsContainer = document.getElementById('indicators');
+        const playPauseBtn = document.getElementById('playPause');
+        const floatingElements = document.getElementById('floatingElements');
+        
+        // 当前幻灯片索引
+        let currentIndex = 0;
+        let isPlaying = true;
+        let slideInterval;
+        
+        // 初始化幻灯片
+        function initCarousel() {
+            // 创建幻灯片
+            photos.forEach((photo, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'slide';
                 
-                <div class="footer-section">
-                    <h3>联系我们</h3>
-                    <p>邮箱: contact@lightmoments.com</p>
-                    <p>电话: +86 123-4567-8900</p>
-                    <p>地址: 北京市朝阳区艺术园区A座</p>
-                </div>
+                slide.innerHTML = `
+                    <img src="${photo.image}" alt="${photo.title}" class="slide-image">
+                    <div class="slide-content">
+                        <h2 class="slide-title">${photo.title}</h2>
+                        <p class="slide-date">${photo.date}</p>
+                        <p class="slide-description">${photo.description}</p>
+                    </div>
+                `;
                 
-                <div class="footer-section">
-                    <h3>关注我们</h3>
-                    <p>微信公众号: 光影瞬间</p>
-                    <p>微博: @光影瞬间摄影</p>
-                    <p>Instagram: @light_moments</p>
-                </div>
-            </div>
+                carousel.appendChild(slide);
+                
+                // 创建指示器
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator';
+                if (index === 0) indicator.classList.add('active');
+                indicator.addEventListener('click', () => goToSlide(index));
+                indicatorsContainer.appendChild(indicator);
+            });
             
-            <div class="footer-bottom">
-                <p>&copy; 2023 光影瞬间 | 精美图片展示网站 版权所有</p>
-            </div>
-        </div>
-    </footer>
+            // 设置自动播放
+            startSlideShow();
+            
+            // 创建浮动元素
+            createFloatingElements();
+        }
+        
+        // 创建背景浮动元素
+        function createFloatingElements() {
+            for (let i = 0; i < 15; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                
+                const size = Math.random() * 100 + 50;
+                element.style.width = `${size}px`;
+                element.style.height = `${size}px`;
+                element.style.left = `${Math.random() * 100}%`;
+                element.style.animationDelay = `${Math.random() * 10}s`;
+                element.style.animationDuration = `${15 + Math.random() * 20}s`;
+                
+                floatingElements.appendChild(element);
+            }
+        }
+        
+        // 开始自动播放
+        function startSlideShow() {
+            slideInterval = setInterval(() => {
+                nextSlide();
+            }, 5000);
+        }
+        
+        // 停止自动播放
+        function stopSlideShow() {
+            clearInterval(slideInterval);
+        }
+        
+        // 下一张幻灯片
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % photos.length;
+            updateCarousel();
+        }
+        
+        // 上一张幻灯片
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + photos.length) % photos.length;
+            updateCarousel();
+        }
+        
+        // 跳转到指定幻灯片
+        function goToSlide(index) {
+            currentIndex = index;
+            updateCarousel();
+        }
+        
+        // 更新轮播显示
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+            
+            // 更新指示器
+            document.querySelectorAll('.indicator').forEach((indicator, index) => {
+                if (index === currentIndex) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+        
+        // 切换播放/暂停
+        function togglePlayPause() {
+            if (isPlaying) {
+                stopSlideShow();
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            } else {
+                startSlideShow();
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            isPlaying = !isPlaying;
+        }
+        
+        // 事件监听
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        
+        // 初始化
+        initCarousel();
+    </script>
 </body>
-    </html>
+</html>
