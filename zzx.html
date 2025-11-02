@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>时光回忆 - 照片走马灯</title>
+    <title>时光印记 - 照片展示墙</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -14,190 +14,190 @@
         }
         
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            color: #fff;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 40px 20px;
         }
         
         .container {
-            width: 90%;
-            max-width: 1200px;
-            text-align: center;
-            position: relative;
-            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
         }
         
         header {
-            margin-bottom: 40px;
-            padding: 20px;
-            animation: fadeIn 2s ease;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
         }
         
         h1 {
             font-size: 3.5rem;
-            margin-bottom: 10px;
-            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         .subtitle {
             font-size: 1.2rem;
-            opacity: 0.9;
+            color: #666;
             font-weight: 300;
             letter-spacing: 2px;
         }
         
-        .carousel-container {
+        .photo-wall {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .photo-item {
             position: relative;
-            width: 100%;
-            height: 500px;
-            margin: 0 auto;
-            overflow: hidden;
             border-radius: 15px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            aspect-ratio: 1/1;
+            background: #fff;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
         }
         
-        .carousel {
-            display: flex;
-            transition: transform 0.8s ease;
-            height: 100%;
+        .photo-item:nth-child(2) { animation-delay: 0.1s; }
+        .photo-item:nth-child(3) { animation-delay: 0.2s; }
+        .photo-item:nth-child(4) { animation-delay: 0.3s; }
+        .photo-item:nth-child(5) { animation-delay: 0.4s; }
+        .photo-item:nth-child(6) { animation-delay: 0.5s; }
+        .photo-item:nth-child(7) { animation-delay: 0.6s; }
+        .photo-item:nth-child(8) { animation-delay: 0.7s; }
+        
+        .photo-item:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
         
-        .slide {
-            min-width: 100%;
-            height: 100%;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .slide-image {
+        .photo-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 15px;
+            transition: transform 0.5s ease;
         }
         
-        .slide-content {
+        .photo-item:hover .photo-img {
+            transform: scale(1.1);
+        }
+        
+        .photo-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            padding: 30px;
-            text-align: left;
-            border-radius: 0 0 15px 15px;
-        }
-        
-        .slide-title {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-        
-        .slide-date {
-            font-size: 1rem;
-            opacity: 0.8;
-            margin-bottom: 15px;
-        }
-        
-        .slide-description {
-            font-size: 1.1rem;
-            line-height: 1.5;
-            max-width: 80%;
-        }
-        
-        .carousel-controls {
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        
-        .btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 20px;
             color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin: 0 15px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+        
+        .photo-item:hover .photo-overlay {
+            transform: translateY(0);
+        }
+        
+        .photo-title {
             font-size: 1.2rem;
-            transition: all 0.3s ease;
+            margin-bottom: 5px;
+        }
+        
+        .photo-date {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .customize-section {
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto 40px;
         }
         
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #444;
+            text-align: center;
         }
         
-        .indicators {
+        .input-group {
             display: flex;
-            justify-content: center;
-            margin-top: 20px;
+            gap: 15px;
+            margin-bottom: 20px;
         }
         
-        .indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            margin: 0 8px;
+        .url-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .url-input:focus {
+            outline: none;
+            border-color: #6a11cb;
+            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.2);
+        }
+        
+        .add-btn {
+            background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
-        .indicator.active {
-            background: white;
-            transform: scale(1.2);
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4);
         }
         
-        .play-pause {
-            margin-top: 20px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: all 0.3s ease;
-        }
-        
-        .play-pause:hover {
-            opacity: 1;
-            transform: scale(1.2);
+        .instructions {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.6;
         }
         
         footer {
-            margin-top: 40px;
+            text-align: center;
             padding: 20px;
+            color: #666;
             font-size: 0.9rem;
-            opacity: 0.7;
         }
         
         .floating-elements {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            z-index: 1;
+            pointer-events: none;
+            z-index: -1;
         }
         
         .floating-element {
             position: absolute;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(106, 17, 203, 0.05);
             border-radius: 50%;
-            animation: float 15s infinite linear;
+            animation: float 20s infinite linear;
         }
         
         @keyframes float {
@@ -212,8 +212,14 @@
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         @media (max-width: 768px) {
@@ -221,17 +227,13 @@
                 font-size: 2.5rem;
             }
             
-            .carousel-container {
-                height: 400px;
+            .photo-wall {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 15px;
             }
             
-            .slide-title {
-                font-size: 1.5rem;
-            }
-            
-            .slide-description {
-                font-size: 1rem;
-                max-width: 100%;
+            .input-group {
+                flex-direction: column;
             }
         }
         
@@ -240,20 +242,12 @@
                 font-size: 2rem;
             }
             
-            .carousel-container {
-                height: 300px;
+            .photo-wall {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
             
-            .slide-content {
-                padding: 15px;
-            }
-            
-            .slide-title {
-                font-size: 1.2rem;
-            }
-            
-            .slide-description {
-                font-size: 0.9rem;
+            .customize-section {
+                padding: 20px;
             }
         }
     </style>
@@ -263,122 +257,113 @@
     
     <div class="container">
         <header>
-            <h1>时光回忆</h1>
+            <h1>时光印记</h1>
             <p class="subtitle">珍藏每一刻美好瞬间</p>
         </header>
         
-        <div class="carousel-container">
-            <div class="carousel" id="carousel">
-                <!-- 幻灯片将通过JavaScript动态生成 -->
+        <div class="photo-wall" id="photoWall">
+            <!-- 照片将通过JavaScript动态生成 -->
+        </div>
+        
+        <div class="customize-section">
+            <h2 class="section-title">自定义照片</h2>
+            <div class="input-group">
+                <input type="text" class="url-input" id="imageUrl" placeholder="输入图片URL地址...">
+                <button class="add-btn" id="addImageBtn">
+                    <i class="fas fa-plus"></i> 添加图片
+                </button>
             </div>
-        </div>
-        
-        <div class="carousel-controls">
-            <button class="btn" id="prevBtn">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="btn" id="nextBtn">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
-        
-        <div class="indicators" id="indicators">
-            <!-- 指示器将通过JavaScript动态生成 -->
-        </div>
-        
-        <div class="play-pause" id="playPause">
-            <i class="fas fa-pause"></i>
+            <p class="instructions">
+                提示：您可以在网上找到喜欢的图片，右键复制图片地址，然后粘贴到上面的输入框中，点击"添加图片"按钮即可将图片添加到展示墙中。
+            </p>
         </div>
         
         <footer>
-            <p>© 2023 时光回忆 - 让美好永存心间</p>
+            <p>© 2023 时光印记 - 让美好永存心间</p>
         </footer>
     </div>
 
     <script>
-        // 照片数据
-        const photos = [
+        // 默认照片数据
+        const defaultPhotos = [
             {
                 image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
                 title: "山间日出",
-                date: "2023年5月15日",
-                description: "清晨的第一缕阳光洒在山巅，万物苏醒的时刻。"
+                date: "2023年5月15日"
             },
             {
                 image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05",
                 title: "森林迷雾",
-                date: "2023年6月22日",
-                description: "晨雾中的森林，如同仙境般神秘而美丽。"
+                date: "2023年6月22日"
             },
             {
                 image: "https://images.unsplash.com/photo-1439066615861-d1af74d74000",
                 title: "湖畔日落",
-                date: "2023年7月10日",
-                description: "夕阳西下，湖面泛起金色的涟漪，宁静而美好。"
+                date: "2023年7月10日"
             },
             {
                 image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
                 title: "海边黄昏",
-                date: "2023年8月5日",
-                description: "海浪轻拍沙滩，夕阳将天空染成橙红色。"
+                date: "2023年8月5日"
             },
             {
                 image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e",
                 title: "山野秋色",
-                date: "2023年9月18日",
-                description: "秋天的山野，层林尽染，如诗如画。"
+                date: "2023年9月18日"
+            },
+            {
+                image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
+                title: "神秘森林",
+                date: "2023年10月3日"
+            },
+            {
+                image: "https://images.unsplash.com/photo-1518837695005-2083093ee35b",
+                title: "雪山之巅",
+                date: "2023年11月12日"
+            },
+            {
+                image: "https://images.unsplash.com/photo-1476820865390-c52aeebb9891",
+                title: "城市夜景",
+                date: "2023年12月5日"
             }
         ];
         
         // DOM元素
-        const carousel = document.getElementById('carousel');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const indicatorsContainer = document.getElementById('indicators');
-        const playPauseBtn = document.getElementById('playPause');
+        const photoWall = document.getElementById('photoWall');
+        const imageUrlInput = document.getElementById('imageUrl');
+        const addImageBtn = document.getElementById('addImageBtn');
         const floatingElements = document.getElementById('floatingElements');
         
-        // 当前幻灯片索引
-        let currentIndex = 0;
-        let isPlaying = true;
-        let slideInterval;
-        
-        // 初始化幻灯片
-        function initCarousel() {
-            // 创建幻灯片
-            photos.forEach((photo, index) => {
-                const slide = document.createElement('div');
-                slide.className = 'slide';
-                
-                slide.innerHTML = `
-                    <img src="${photo.image}" alt="${photo.title}" class="slide-image">
-                    <div class="slide-content">
-                        <h2 class="slide-title">${photo.title}</h2>
-                        <p class="slide-date">${photo.date}</p>
-                        <p class="slide-description">${photo.description}</p>
-                    </div>
-                `;
-                
-                carousel.appendChild(slide);
-                
-                // 创建指示器
-                const indicator = document.createElement('div');
-                indicator.className = 'indicator';
-                if (index === 0) indicator.classList.add('active');
-                indicator.addEventListener('click', () => goToSlide(index));
-                indicatorsContainer.appendChild(indicator);
+        // 初始化照片墙
+        function initPhotoWall() {
+            // 创建默认照片
+            defaultPhotos.forEach(photo => {
+                createPhotoElement(photo.image, photo.title, photo.date);
             });
-            
-            // 设置自动播放
-            startSlideShow();
             
             // 创建浮动元素
             createFloatingElements();
         }
         
+        // 创建照片元素
+        function createPhotoElement(imageUrl, title, date) {
+            const photoItem = document.createElement('div');
+            photoItem.className = 'photo-item';
+            
+            photoItem.innerHTML = `
+                <img src="${imageUrl}" alt="${title}" class="photo-img">
+                <div class="photo-overlay">
+                    <h3 class="photo-title">${title}</h3>
+                    <p class="photo-date">${date}</p>
+                </div>
+            `;
+            
+            photoWall.appendChild(photoItem);
+        }
+        
         // 创建背景浮动元素
         function createFloatingElements() {
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < 20; i++) {
                 const element = document.createElement('div');
                 element.className = 'floating-element';
                 
@@ -393,69 +378,96 @@
             }
         }
         
-        // 开始自动播放
-        function startSlideShow() {
-            slideInterval = setInterval(() => {
-                nextSlide();
-            }, 5000);
-        }
-        
-        // 停止自动播放
-        function stopSlideShow() {
-            clearInterval(slideInterval);
-        }
-        
-        // 下一张幻灯片
-        function nextSlide() {
-            currentIndex = (currentIndex + 1) % photos.length;
-            updateCarousel();
-        }
-        
-        // 上一张幻灯片
-        function prevSlide() {
-            currentIndex = (currentIndex - 1 + photos.length) % photos.length;
-            updateCarousel();
-        }
-        
-        // 跳转到指定幻灯片
-        function goToSlide(index) {
-            currentIndex = index;
-            updateCarousel();
-        }
-        
-        // 更新轮播显示
-        function updateCarousel() {
-            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+        // 添加新图片
+        function addNewImage() {
+            const imageUrl = imageUrlInput.value.trim();
             
-            // 更新指示器
-            document.querySelectorAll('.indicator').forEach((indicator, index) => {
-                if (index === currentIndex) {
-                    indicator.classList.add('active');
-                } else {
-                    indicator.classList.remove('active');
-                }
-            });
+            if (!imageUrl) {
+                alert('请输入图片URL地址');
+                return;
+            }
+            
+            // 验证URL格式
+            if (!isValidImageUrl(imageUrl)) {
+                alert('请输入有效的图片URL地址');
+                return;
+            }
+            
+            // 创建新图片元素
+            createPhotoElement(imageUrl, '新照片', getCurrentDate());
+            
+            // 清空输入框
+            imageUrlInput.value = '';
+            
+            // 显示成功消息
+            showSuccessMessage();
         }
         
-        // 切换播放/暂停
-        function togglePlayPause() {
-            if (isPlaying) {
-                stopSlideShow();
-                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-            } else {
-                startSlideShow();
-                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            }
-            isPlaying = !isPlaying;
+        // 验证图片URL
+        function isValidImageUrl(url) {
+            return /\.(jpeg|jpg|gif|png|webp|bmp)$/i.test(url) || 
+                   /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|bmp))/i.test(url);
+        }
+        
+        // 获取当前日期
+        function getCurrentDate() {
+            const now = new Date();
+            return `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
+        }
+        
+        // 显示成功消息
+        function showSuccessMessage() {
+            const message = document.createElement('div');
+            message.textContent = '图片添加成功！';
+            message.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #4CAF50;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                animation: slideIn 0.5s ease, fadeOut 0.5s ease 2.5s forwards;
+            `;
+            
+            document.body.appendChild(message);
+            
+            // 3秒后移除消息
+            setTimeout(() => {
+                if (message.parentNode) {
+                    message.parentNode.removeChild(message);
+                }
+            }, 3000);
         }
         
         // 事件监听
-        prevBtn.addEventListener('click', prevSlide);
-        nextBtn.addEventListener('click', nextSlide);
-        playPauseBtn.addEventListener('click', togglePlayPause);
+        addImageBtn.addEventListener('click', addNewImage);
+        
+        imageUrlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addNewImage();
+            }
+        });
         
         // 初始化
-        initCarousel();
+        initPhotoWall();
+        
+        // 添加CSS动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            
+            @keyframes fadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
