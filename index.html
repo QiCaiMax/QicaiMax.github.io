@@ -1,63 +1,126 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>超雄来喽</title>
+    <title>📹 视频播放器</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #0b0f15 0%, #1a1f2b 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
-        .container {
-            max-width: 800px;
-            text-align: center;
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+
+        .card {
+            width: 100%;
+            max-width: 960px;
+            background: rgba(22, 28, 38, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            padding: 28px 28px 32px;
+            box-shadow: 0 30px 45px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+            border: 1px solid rgba(120, 160, 255, 0.2);
         }
+
         h1 {
-            color: #333;
-            margin-bottom: 20px;
+            font-size: 1.9rem;
             font-weight: 500;
+            letter-spacing: -0.01em;
+            color: #eef3fc;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .image-container {
-            margin: 20px 0;
-            border-radius: 8px;
+
+        h1 span {
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 2px 12px;
+            border-radius: 40px;
+            color: white;
+            background: linear-gradient(135deg, #3b66f0, #7a4cf0);
+            box-shadow: 0 2px 10px rgba(59, 102, 240, 0.4);
+        }
+
+        .subhead {
+            color: #9aaec9;
+            margin-bottom: 26px;
+            font-size: 1rem;
+            border-left: 4px solid #3b66f0;
+            padding-left: 16px;
+            background: rgba(59, 102, 240, 0.08);
+            border-radius: 0 12px 12px 0;
+            line-height: 1.4;
+        }
+
+        .video-container {
+            background: #000;
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 16px 30px -8px #000000cc, 0 0 0 1px #2f3b4e inset;
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            position: relative;
         }
-        img {
-            max-width: 100%;
-            height: auto;
+
+        video {
+            width: 100%;
+            height: 100%;
             display: block;
-            transition: transform 0.3s ease;
+            object-fit: contain;
+            background: black;
+            outline: none;
         }
-        img:hover {
-            transform: scale(1.02);
-        }
-        .caption {
-            color: #666;
-            margin-top: 15px;
-            font-style: italic;
+
+        @media (max-width: 700px) {
+            .card {
+                padding: 20px 16px 24px;
+                border-radius: 1.6rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .video-container {
+                border-radius: 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>品鉴一下🤓</h1>
-        <div class="image-container">
-            <img src="mmexport1761745920661.jpg" alt="展示的图片">
+    <div class="card">
+        <h1>
+            🎬 视频播放器
+            <span>内置视频</span>
+        </h1>
+        <div class="subhead">
+            ⚡ 视频已内置，直接点击播放即可。
         </div>
-        <p class="caption">mmexport1761745920661.jpg</p>
+
+        <div class="video-container">
+            <!-- ⬇️ 把下面的 src 改成您的视频文件路径即可 ⬇️ -->
+            <video
+                id="videoPlayer"
+                controls
+                playsinline
+                preload="metadata"
+                src="your-video.mp4">
+            </video>
+        </div>
     </div>
 </body>
 </html>
